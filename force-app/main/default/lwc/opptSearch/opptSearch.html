@@ -1,6 +1,17 @@
 <template>
-    <c-oppt-search>
-        <input>input text</input>
-    </c-oppt-search>
+    <div id="search">
+        <lightning-input
+        label="accountName"
+        value = {inputAccountName}
+        onchange = {searchAccountName}
+        ></lightning-input>
+        <h3>debug! - you entered {inputAccountName}</h3>
+    </div>
+    <div id="result">
+        <h5><!--placeholder for the result-->result here!</h5>
+        <lightning-datatable>
+            
+        </lightning-datatable>
+    </div>
     
 </template>

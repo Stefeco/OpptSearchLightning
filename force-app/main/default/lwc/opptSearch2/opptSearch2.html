@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title="Opportunity search Lightning Version" icon-name="utility:hierarchy">
+    <lightning-layout multiple-rows="true" vertical-align="end">
+    
+        <!-- the input search field -->
+        <lightning-layout-item size="4" padding="around-small">
+        <div class="slds-var-m-around_medium">
+            <lightning-input
+                name="opptSearchKey"
+                type="text"
+                value={opptSearchKey}
+                label="enter keyword for opportunity search"
+                onchange={updateKey}
+                >
+            </lightning-input>
+        </div>
+        </lightning-layout-item>
+
+        <!-- the search button -->
+        <lightning-layout-item  size="2" padding="around-small">
+        <div>
+            <lightning-button variant="brand" label="Search Opportunity" title="Search Opportunity" 
+                onclick={handleSearch} class="slds-m-left_x-small">
+            </lightning-button>
+        </div>
+        </lightning-layout-item>
+
+        <!-- the datatable and the result of the query -->
+        <lightning-layout-item  size="12" padding="around-small">
+            <lightning-datatable key-field="id" data={opptTable} columns={cols}>
+            </lightning-datatable>
+        </lightning-layout-item>
+    </lightning-layout>
+
+</lightning-card>
+</template>

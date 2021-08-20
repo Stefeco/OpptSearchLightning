@@ -26,7 +26,7 @@
         </lightning-layout-item>
 
         <!-- the datatable and the result of the query -->
-        <lightning-layout-item  size="12" padding="around-small">
+        <lightning-layout-item  size="12" padding="around-small" if:true={isTableVisible}>
             <lightning-datatable key-field="id" data={opptTable} columns={cols}>
             </lightning-datatable>
         </lightning-layout-item>

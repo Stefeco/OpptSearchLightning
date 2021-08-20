@@ -1,50 +1,40 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 //import the apex controller
 import getOpportunity from '@salesforce/apex/OpptSearchByKeyWordController.getOpportunity';
 
-/*//set opportunity objects fields
-import NAME_FIELD from '@salesforce/schema/Opportunity.Name';
-import ACCOUNT_ID from '@salesforce/schema/Opportunity.AccountId';
-import AMOUNT from '@salesforce/schema/Opportunity.Amount';
-import CLOSE_DATE from "@salesforce/schema/Opportunity.CloseDate";
-    
-const opptTable = [
-    NAME_FIELD,
-    ACCOUNT_ID,
-    CLOSE_DATE,
-    AMOUNT,
-];*/
-
 export default class OpptSearch2 extends LightningElement {
 
-    opptSearchKey = '';
+    isTableVisible=false;
+
+    //we connect the table for automatic update and define the columns that will appear in the datatable
     @track opptTable;
+    @api recordId;
+    @track  cols = [
+        { label : 'Account Id', fieldName : 'AccountId', type : 'text' },
+        { label : 'Opportunity Name', fieldName : 'Name', type : 'text'},
+        { label : 'Amount', fieldName : 'Amount', type : 'currency'},
+        { label : 'Close Date', fieldName : 'CloseDate', type : 'date'}
+    ]
 
     //this is a js function that updates automatically the "updateKey" variable when someone enters text in the input field.
     updateKey(event){
         this.opptSearchKey = event.target.value;
     }
 
-    //@wire(getOpportunity, {opptSearchKey: $opptSearchKey}) Opportunity;
-
     
-    // the handleSearch function calls the apex controller method and pass the searchKey as parameter.
+    // the handleSearch function calls the apex controller method and pass the searchKey and recordId as parameter.
+
     handleSearch(){
-        getOpportunity({opptSearchKey: this.opptSearchKey})
+        //alert(this.recordId);
+        getOpportunity({opptSearchKey: this.opptSearchKey, acctId: this.recordId})
         .then(result=>{
             this.opptTable=result;
         })
         .catch(error=>{
             this.opptTable=null;
         });
+
+        this.isTableVisible = true;
     }
-    
-    
-    cols = [
-        { label : 'Account Id', fieldName : 'AccountId', type : 'text' },
-        { label : 'Opportunity Name', fieldName : 'Name', type : 'text'},
-        { label : 'Amount', fieldName : 'Amount', type : 'currency'},
-        { label : 'Close Date', fieldName : 'CloseDate', type : 'date'}
-    ]
 
 }
